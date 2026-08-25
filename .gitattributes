@@ -1,0 +1,10 @@
+# Normalise line endings. The repo is edited on Windows but built on Linux,
+# so store everything as LF and let Git convert on checkout.
+* text=auto eol=lf
+
+# Binary assets must never be converted.
+*.png binary
+*.ico binary
+*.jpg binary
+*.woff binary
+*.woff2 binary

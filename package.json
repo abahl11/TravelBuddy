@@ -1,0 +1,24 @@
+{
+  "name": "travel-buddy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Travel Buddy — find student travel companions. React client + Express/MongoDB API served from a single origin.",
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "install:all": "cd server && npm install --include=dev && cd ../client && npm install --include=dev",
+    "build": "npm run install:all && npm run build:client",
+    "build:client": "cd client && npm run build",
+    "start": "cd server && npm start",
+    "dev": "concurrently -n api,web -c blue,magenta \"cd server && npm run dev\" \"cd client && npm start\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm start",
+    "seed": "cd server && npm run seed",
+    "check:db": "cd server && npm run check:db"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "license": "ISC"
+}

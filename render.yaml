@@ -1,0 +1,42 @@
+# Render blueprint: one web service serving both the API and the React client.
+#
+# The build compiles the client into client/build, and Express serves those
+# files alongside /api/* — so the whole app lives on a single Render URL.
+services:
+  - type: web
+    name: travel-buddy
+    runtime: node
+    plan: free
+    region: singapore
+    branch: main
+    buildCommand: npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      # Pinned: react-scripts 5 predates Node 22 and its build breaks there.
+      # This is the version the app was built and tested against.
+      - key: NODE_VERSION
+        value: "20"
+      - key: NODE_ENV
+        value: production
+      # Create React App treats warnings as errors when CI is true.
+      - key: CI
+        value: "false"
+      # Generated once by Render and kept across deploys.
+      - key: JWT_SECRET
+        generateValue: true
+      # Set these in the Render dashboard — they are secrets.
+      - key: MONGO_URI
+        sync: false
+      # Maps: both free tiers, neither needs a credit card. Optional — the app
+      # runs without them, just without suggestions and map previews.
+      - key: GEOAPIFY_API_KEY
+        sync: false
+      - key: MAPTILER_API_KEY
+        sync: false
+      # Optional email notifications.
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASSWORD
+        sync: false
